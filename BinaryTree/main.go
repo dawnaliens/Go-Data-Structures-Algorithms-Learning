@@ -26,6 +26,44 @@ func (n *Node) Insert(k int) {
 	}
 }
 
+func (n *Node) Delete(k int) *Node {
+	if n == nil {
+		return nil
+	}
+	if k < n.Key {
+		n.Left = n.Left.Delete(k)
+		return n
+	}
+	if k > n.Key {
+		n.Right = n.Right.Delete(k)
+		return n
+	}
+
+	if n.Left == nil && n.Right == nil {
+		return nil
+	}
+
+	if n.Left == nil {
+		return n.Right
+	}
+	if n.Right == nil {
+		return n.Left
+	}
+	minRight := n.Right.minNode()
+	n.Key = minRight.Key
+	n.Right = n.Right.Delete(n.Key)
+	return n
+}
+
+// Find the smallest node in the tree
+func (n *Node) minNode() *Node {
+	current := n
+	for current.Left != nil {
+		current = current.Left
+	}
+	return current
+}
+
 func (n *Node) InOrderTraversal() {
 	if n == nil {
 		return
@@ -55,8 +93,10 @@ func main() {
 	tree.Insert(25)
 	tree.Insert(8)
 	tree.Insert(5)
-	fmt.Println("InOrderTraversal:")
-	tree.PreOrderTraversal()
+
 	fmt.Println("In Order Traversal:")
+	tree.InOrderTraversal()
+	tree.Delete(1)
+	fmt.Println("After Delete: ")
 	tree.InOrderTraversal()
 }
