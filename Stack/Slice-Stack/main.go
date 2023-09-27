@@ -49,4 +49,10 @@ func main() {
 	stackSlice.Pop()
 	fmt.Println(stackSlice.IsEmpty())
 	fmt.Println(stackSlice.Peek())
+	stackSlice.Push(23)
+	stackSlice.Push(45)
+	stackSlice.Push(99)
+	stackSlice.Push(100)
+	fmt.Println(stackSlice.IsEmpty())
+	fmt.Println(*stackSlice)
 }
